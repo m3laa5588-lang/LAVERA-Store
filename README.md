@@ -1,1 +1,676 @@
-# LAVERA-Store
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAVÉRA | Casual Looks Made For You</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+
+    :root {
+      --primary: #c25e77;
+      --primary-hover: #a3485f;
+      --accent: #f8ecee;
+      --text: #2d2d2d;
+      --bg: #fafafa;
+      --white: #ffffff;
+      --shadow: 0 10px 25px rgba(194, 94, 119, 0.1);
+      --border: #f0d8df;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Tajawal', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 40px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #fcebeb 0%, #f4d3da 100%);
+      text-align: center;
+      padding: 35px 20px 25px;
+      border-bottom-left-radius: 30px;
+      border-bottom-right-radius: 30px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+
+    .brand-logo-container {
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    .brand-logo {
+      max-width: 160px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 6px 18px rgba(194, 94, 119, 0.12);
+      transition: transform 0.3s ease;
+      background: var(--white);
+      padding: 6px;
+    }
+
+    .brand-logo:hover {
+      transform: translateY(-3px);
+    }
+
+    .brand-title {
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .brand-tagline {
+      font-size: 1rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+
+    .brand-sub {
+      font-size: 0.95rem;
+      color: #555;
+      background: var(--white);
+      display: inline-block;
+      padding: 6px 18px;
+      border-radius: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 25px;
+      color: var(--primary);
+    }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      margin-bottom: 40px;
+    }
+
+    .model-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .model-img-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background-color: #f8f8f8;
+      overflow: hidden;
+    }
+
+    .model-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+      transition: opacity 0.2s ease;
+    }
+
+    .gallery-thumbnails {
+      display: flex;
+      gap: 8px;
+      padding: 10px 15px 0 15px;
+      overflow-x: auto;
+    }
+
+    .thumb-img {
+      width: 50px;
+      height: 65px;
+      object-fit: cover;
+      border-radius: 8px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.2s ease;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+
+    .thumb-img.active, .thumb-img:hover {
+      border-color: var(--primary);
+      opacity: 1;
+      transform: scale(1.05);
+    }
+
+    .model-info {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .model-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .model-price {
+      font-size: 1.25rem;
+      color: var(--primary);
+      font-weight: 800;
+      margin-bottom: 15px;
+    }
+
+    .option-group {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 5px;
+    }
+
+    .option-label {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #666;
+    }
+
+    .color-buttons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .color-btn {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .color-btn.active {
+      border-color: var(--primary);
+      transform: scale(1.2);
+    }
+
+    .size-buttons {
+      display: flex;
+      gap: 6px;
+    }
+
+    .size-btn {
+      padding: 4px 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #f9f9f9;
+      font-size: 0.85rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--text);
+      transition: all 0.2s ease;
+    }
+
+    .size-btn.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+
+    .qty-control {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      background: #f9f9f9;
+    }
+
+    .qty-btn {
+      width: 32px;
+      height: 32px;
+      background: none;
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    .qty-val {
+      width: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .add-to-cart-btn {
+      margin-top: 15px;
+      width: 100%;
+      padding: 12px;
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .add-to-cart-btn.selected {
+      background-color: #27ae60;
+    }
+
+    .checkout-card {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .summary-box {
+      background: var(--accent);
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .summary-item.total {
+      border-top: 1px solid var(--border);
+      padding-top: 10px;
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: var(--primary);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: #25D366;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="brand-logo-container">
+      <img src="https://i.ibb.co/r2QKnzsr/f9294446-c652-4fa5-b20c-9f78c8785bf3.jpg" alt="LAVÉRA Logo" class="brand-logo">
+    </div>
+    <div class="brand-title">LAVÉRA</div>
+    <div class="brand-tagline">Casual Looks Made For You</div>
+    <div class="brand-sub">ملابس كاجوال حريمي بأسعار مميزة 👗✨</div>
+  </header>
+
+  <div class="container">
+    <div class="section-title">✨ اختاري لوكك</div>
+    <div class="models-grid" id="modelsGrid"></div>
+
+    <div class="checkout-card" id="checkout">
+      <div class="section-title">📋 بيانات الشحن</div>
+      <div class="summary-box">
+        <div id="summaryItems">اختاري الموديل ثم اضغطي "اطلبِ الآن"</div>
+        <div class="summary-item" id="shippingRow" style="display: none;">
+          <span>مصاريف الشحن:</span>
+          <span>70 ج.م</span>
+        </div>
+        <div class="summary-item total">
+          <span>الإجمالي النهائي:</span>
+          <span id="grandTotal">0 ج.م</span>
+        </div>
+      </div>
+
+      <form id="orderForm">
+        <div class="form-group"><label>الاسم بالكامل</label><input type="text" class="form-control" id="custName" required></div>
+        <div class="form-group"><label>رقم الهاتف</label><input type="tel" class="form-control" id="custPhone" required></div>
+        <div class="form-group"><label>المحافظة</label><input type="text" class="form-control" id="custGov" required></div>
+        <div class="form-group"><label>العنوان بالتفصيل</label><input type="text" class="form-control" id="custAddress" required></div>
+        <button type="submit" class="submit-btn">تأكيد الطلب عبر الواتساب 🚀</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const WHATSAPP_NUMBER = "201013311100"; 
+    const SHIPPING_FEE = 70; 
+
+    const products = [
+      { 
+        id: 1, 
+        name: "Linen Suit", 
+        price: 800, 
+        img: "https://i.ibb.co/C3z8mvz1/MECA8757.jpg",
+        gallery: [
+          "https://i.ibb.co/C3z8mvz1/MECA8757.jpg",
+          "https://i.ibb.co/RTtQbD7S/MECA8730.jpg",
+          "https://i.ibb.co/7dH8f9dz/MECA8748.jpg",
+          "https://i.ibb.co/60KQfX3R/MECA8751.jpg"
+        ],
+        colors: [
+          { name: "أسود", code: "#000000" },
+          { name: "بيج", code: "#f5f5dc" },
+          { name: "بينك", code: "#ffc0cb" },
+          { name: "أبيض", code: "#ffffff" },
+          { name: "أحمر", code: "#ff0000" }
+        ],
+        sizes: ["M", "L", "XL", "XXL"] 
+      },
+      { 
+        id: 2, 
+        name: "Strips Suit", 
+        price: 900, 
+        img: "https://i.ibb.co/CsKsNYqG/MECA8892.jpg", 
+        gallery: [
+          "https://i.ibb.co/CsKsNYqG/MECA8892.jpg",
+          "https://i.ibb.co/Z6730rV9/MECA8904.jpg",
+          "https://i.ibb.co/4ZjyJx4v/MECA8911.jpg"
+        ],
+        colors: [
+          { name: "برتقالي", code: "#f39c12" },
+          { name: "أخضر", code: "#2ecc71" },
+          { name: "بيبي بلو", code: "#89cff0" },
+          { name: "كافيه", code: "#a07855" }
+        ], 
+        sizes: ["M", "L", "XL", "XXL"] 
+      },
+      { 
+        id: 3, 
+        name: "S- off shoulder", 
+        price: 400, 
+        img: "https://i.ibb.co/ZRPQ2pRc/MECA9139.jpg", 
+        gallery: [
+          "https://i.ibb.co/ZRPQ2pRc/MECA9139.jpg",
+          "https://i.ibb.co/CKVDMd4t/MECA9135.jpg",
+          "https://i.ibb.co/9k6qpCNk/MECA9143.jpg",
+          "https://i.ibb.co/Qvchq4tY/MECA9149.jpg",
+          "https://i.ibb.co/JwNSTwPr/MECA9130.jpg"
+        ],
+        colors: [
+          { name: "بيج", code: "#f5f5dc" },
+          { name: "بني", code: "#5c4033" },
+          { name: "دارك جرين", code: "#006400" },
+          { name: "دهبي", code: "#d4af37" },
+          { name: "جولد روز", code: "#b76e79" }
+        ], 
+        sizes: ["M", "L", "XL"] 
+      },
+      { 
+        id: 4, 
+        name: "Floral midi Dress", 
+        price: 600, 
+        img: "https://i.ibb.co/jkkZZPGq/MECA9166.jpg", 
+        gallery: [
+          "https://i.ibb.co/jkkZZPGq/MECA9166.jpg",
+          "https://i.ibb.co/tpSvjk2w/MECA9156.jpg",
+          "https://i.ibb.co/wZn7byn3/MECA9162.jpg"
+        ],
+        colors: [
+          { name: "أزرق", code: "#1e90ff" },
+          { name: "أخضر", code: "#2ecc71" },
+          { name: "أحمر", code: "#e74c3c" }
+        ], 
+        sizes: ["M", "L", "XL", "XXL"] 
+      },
+      { 
+        id: 5, 
+        name: "Striped pants", 
+        price: 399, 
+        img: "https://i.ibb.co/GvYJZYCR/MECA9416.jpg", 
+        gallery: [
+          "https://i.ibb.co/GvYJZYCR/MECA9416.jpg",
+          "https://i.ibb.co/hF0d35kw/c03b7024-3823-4073-999d-5efe0119f1b6.jpg",
+          "https://i.ibb.co/0R1KZtpW/Gemini-Generated-Image-3t5ymv3t5ymv3t5y.jpg",
+          "https://i.ibb.co/nT3wN5H/Gemini-Generated-Image-yzt1rbyzt1rbyzt1.jpg"
+        ],
+        colors: [
+          { name: "بينك", code: "#ffc0cb" },
+          { name: "بيج", code: "#f5f5dc" },
+          { name: "دارك جرين", code: "#006400" },
+          { name: "بيبي بلو", code: "#89cff0" }
+        ], 
+        sizes: ["M", "L", "XL"] 
+      },
+      { 
+        id: 6, 
+        name: "riped & denim", 
+        price: 650, 
+        img: "https://i.ibb.co/PsssCsns/MECA9286.jpg", 
+        gallery: [
+          "https://i.ibb.co/PsssCsns/MECA9286.jpg",
+          "https://i.ibb.co/5gPcycBp/MECA9293.jpg",
+          "https://i.ibb.co/bMSqj4GL/MECA9297.jpg",
+          "https://i.ibb.co/hFV0HwYj/MECA9300.jpg",
+          "https://i.ibb.co/RTbtsgWY/MECA9304.jpg",
+          "https://i.ibb.co/5WXffTYg/MECA9309.jpg"
+        ],
+        colors: [
+          { name: "رمادي", code: "#808080" },
+          { name: "بينك", code: "#ffc0cb" },
+          { name: "أصفر", code: "#f1c40f" },
+          { name: "نبيتي", code: "#800020" },
+          { name: "سيلفر", code: "#c0c0c0" },
+          { name: "مينت", code: "#98ff98" }
+        ], 
+        sizes: ["M", "L", "XL", "XXL"] 
+      }
+    ];
+
+    let state = {};
+
+    products.forEach(p => {
+      state[p.id] = { 
+        ...p, 
+        currentImg: p.img,
+        qty: 1, 
+        selectedSize: p.sizes[0], 
+        selectedColor: p.colors[0], 
+        selected: false 
+      };
+    });
+
+    function renderProducts() {
+      const grid = document.getElementById('modelsGrid');
+      grid.innerHTML = products.map(p => {
+        const item = state[p.id];
+        return `
+          <div class="model-card">
+            <div class="model-img-wrapper">
+              <img src="${item.currentImg}" alt="${p.name}" class="model-img" id="main-img-${p.id}" onerror="this.src='https://via.placeholder.com/380x506?text=LAVÉRA'">
+            </div>
+            
+            ${p.gallery ? `
+              <div class="gallery-thumbnails">
+                ${p.gallery.map(gUrl => `
+                  <img src="${gUrl}" class="thumb-img ${item.currentImg === gUrl ? 'active' : ''}" onclick="changeMainImage(${p.id}, '${gUrl}')" alt="${p.name}">
+                `).join('')}
+              </div>
+            ` : ''}
+
+            <div class="model-info">
+              <div class="model-name">${p.name}</div>
+              <div class="model-price">${p.price} ج.م</div>
+              
+              <div class="option-group">
+                <span class="option-label">اللون: ${item.selectedColor.name}</span>
+                <div class="color-buttons">
+                  ${p.colors.map(c => `
+                    <button type="button" 
+                            class="color-btn ${item.selectedColor.name === c.name ? 'active' : ''}" 
+                            style="background-color: ${c.code}" 
+                            title="${c.name}"
+                            onclick="selectColor(${p.id}, '${c.name}', '${c.code}')">
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <div class="option-group">
+                <span class="option-label">الكمية:</span>
+                <div class="qty-control">
+                  <button type="button" class="qty-btn" onclick="changeQty(${p.id}, -1)">-</button>
+                  <span class="qty-val">${item.qty}</span>
+                  <button type="button" class="qty-btn" onclick="changeQty(${p.id}, 1)">+</button>
+                </div>
+              </div>
+
+              <div class="option-group">
+                <span class="option-label">المقاس:</span>
+                <div class="size-buttons">
+                  ${p.sizes.map(sz => `
+                    <button type="button" class="size-btn ${item.selectedSize === sz ? 'active' : ''}" onclick="selectSize(${p.id}, '${sz}')">
+                      ${sz}
+                    </button>
+                  `).join('')}
+                </div>
+              </div>
+
+              <button type="button" class="add-to-cart-btn ${item.selected ? 'selected' : ''}" onclick="toggleSelect(${p.id})">
+                ${item.selected ? '✓ تم الاختيار' : '🛒 اطلبِ الآن'}
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function changeMainImage(id, url) {
+      state[id].currentImg = url;
+      renderProducts();
+    }
+
+    function changeQty(id, delta) {
+      if (state[id].qty + delta >= 1) {
+        state[id].qty += delta;
+        renderProducts();
+        updateSummary();
+      }
+    }
+
+    function selectSize(id, size) {
+      state[id].selectedSize = size;
+      renderProducts();
+      updateSummary();
+    }
+
+    function selectColor(id, colorName, colorCode) {
+      state[id].selectedColor = { name: colorName, code: colorCode };
+      renderProducts();
+      updateSummary();
+    }
+
+    function toggleSelect(id) {
+      state[id].selected = !state[id].selected;
+      renderProducts();
+      updateSummary();
+    }
+
+    function updateSummary() {
+      const active = Object.values(state).filter(i => i.selected);
+      let productsTotal = 0;
+
+      if (active.length === 0) {
+        document.getElementById('summaryItems').innerHTML = 'اختاري الموديل ثم اضغطي "اطلبِ الآن"';
+        document.getElementById('shippingRow').style.display = 'none';
+        document.getElementById('grandTotal').innerText = '0 ج.م';
+        return;
+      }
+
+      document.getElementById('summaryItems').innerHTML = active.map(i => {
+        const itemTotal = i.price * i.qty;
+        productsTotal += itemTotal;
+        return `<div class="summary-item"><span>${i.name} (${i.selectedColor.name} | مقاس: ${i.selectedSize} | عدد: ${i.qty})</span><span>${itemTotal} ج.م</span></div>`;
+      }).join('');
+
+      document.getElementById('shippingRow').style.display = 'flex';
+      const grandTotal = productsTotal + SHIPPING_FEE;
+      document.getElementById('grandTotal').innerText = `${grandTotal} ج.م`;
+    }
+
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const active = Object.values(state).filter(i => i.selected);
+      
+      if (!active.length) {
+        alert('برجاء اختيار موديل واحد على الأقل قبل تأكيد الطلب');
+        return;
+      }
+
+      let orderDetails = "";
+      let productsTotal = 0;
+
+      active.forEach((item, index) => {
+        const itemPrice = item.price * item.qty;
+        productsTotal += itemPrice;
+        orderDetails += `${index + 1}. *${item.name}*\n   العدد: ${item.qty} | المقاس: ${item.selectedSize} | اللون: ${item.selectedColor.name} | السعر: ${itemPrice} ج.م\n`;
+      });
+
+      const grandTotal = productsTotal + SHIPPING_FEE;
+
+      const msg = `🛍️ *طلب جديد من LAVÉRA*\n\n` +
+        `👤 *الاسم:* ${document.getElementById('custName').value.trim()}\n` +
+        `📱 *الهاتف:* ${document.getElementById('custPhone').value.trim()}\n` +
+        `📍 *المحافظة:* ${document.getElementById('custGov').value.trim()}\n` +
+        `🏡 *العنوان:* ${document.getElementById('custAddress').value.trim()}\n\n` +
+        `📦 *الطلبات:*\n${orderDetails}\n` +
+        `💵 *إجمالي المنتجات:* ${productsTotal} ج.م\n` +
+        `🚚 *مصاريف الشحن:* ${SHIPPING_FEE} ج.م\n` +
+        `💰 *الإجمالي النهائي:* ${grandTotal} ج.م`;
+
+      window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank');
+    });
+
+    renderProducts();
+  </script>
+</body>
+</html>
