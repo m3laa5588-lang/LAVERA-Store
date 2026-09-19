@@ -4,8 +4,28 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LAVÉRA | Casual Looks Made For You</title>
+  
+  <!-- Meta Pixel Code -->
+  <script>
+    const META_PIXEL_ID = "4385124481740982"; // 👈 تم وضع رقم البيكسل الخاص بك بنجاح
+
+    if (META_PIXEL_ID && META_PIXEL_ID !== "YOUR_PIXEL_ID_HERE") {
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', META_PIXEL_ID);
+      fbq('track', 'PageView');
+    }
+  </script>
+  <!-- End Meta Pixel Code -->
+
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap');
 
     :root {
       --primary: #c25e77;
@@ -14,7 +34,7 @@
       --text: #2d2d2d;
       --bg: #fafafa;
       --white: #ffffff;
-      --shadow: 0 10px 25px rgba(194, 94, 119, 0.1);
+      --shadow: 0 10px 25px rgba(194, 94, 119, 0.12);
       --border: #f0d8df;
     }
 
@@ -116,6 +136,7 @@
       border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
+      position: relative;
     }
 
     .model-img-wrapper {
@@ -124,6 +145,22 @@
       aspect-ratio: 3 / 4;
       background-color: #f8f8f8;
       overflow: hidden;
+    }
+
+    .price-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: rgba(194, 94, 119, 0.92);
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      backdrop-filter: blur(4px);
+      z-index: 5;
+      letter-spacing: 0.5px;
     }
 
     .model-img {
@@ -166,17 +203,28 @@
       flex-grow: 1;
     }
 
+    .model-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
     .model-name {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 5px;
+      font-size: 1.25rem;
+      font-weight: 800;
     }
 
     .model-price {
-      font-size: 1.25rem;
+      font-size: 1.35rem;
       color: var(--primary);
-      font-weight: 800;
-      margin-bottom: 15px;
+      font-weight: 900;
+      background: var(--accent);
+      padding: 4px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
     }
 
     .option-group {
@@ -307,7 +355,7 @@
       padding-top: 10px;
       margin-top: 10px;
       font-weight: bold;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       color: var(--primary);
     }
 
@@ -382,14 +430,14 @@
   </div>
 
   <script>
-    const WHATSAPP_NUMBER = "201013311100"; 
+    const WHATSAPP_NUMBER = "201013311100"; // استبدله برقم الواتساب الخاص بك
     const SHIPPING_FEE = 70; 
 
     const products = [
       { 
         id: 1, 
         name: "Linen Suit", 
-        price: 700, 
+        price: 800, 
         img: "https://i.ibb.co/C3z8mvz1/MECA8757.jpg",
         gallery: [
           "https://i.ibb.co/C3z8mvz1/MECA8757.jpg",
@@ -409,7 +457,7 @@
       { 
         id: 2, 
         name: "Strips Suit", 
-        price: 700, 
+        price: 900, 
         img: "https://i.ibb.co/CsKsNYqG/MECA8892.jpg", 
         gallery: [
           "https://i.ibb.co/CsKsNYqG/MECA8892.jpg",
@@ -526,6 +574,7 @@
         return `
           <div class="model-card">
             <div class="model-img-wrapper">
+              <div class="price-badge">${p.price} ج.م</div>
               <img src="${item.currentImg}" alt="${p.name}" class="model-img" id="main-img-${p.id}" onerror="this.src='https://via.placeholder.com/380x506?text=LAVÉRA'">
             </div>
             
@@ -538,8 +587,10 @@
             ` : ''}
 
             <div class="model-info">
-              <div class="model-name">${p.name}</div>
-              <div class="model-price">${p.price} ج.م</div>
+              <div class="model-header">
+                <div class="model-name">${p.name}</div>
+                <div class="model-price">${p.price} ج.م</div>
+              </div>
               
               <div class="option-group">
                 <span class="option-label">اللون: ${item.selectedColor.name}</span>
@@ -656,6 +707,14 @@
       });
 
       const grandTotal = productsTotal + SHIPPING_FEE;
+
+      // إرسال حدث الشراء لبيكسل فيس بوك عند ضغط تأكيد الطلب
+      if (typeof fbq !== 'undefined') {
+        fbq('track', 'Purchase', {
+          value: grandTotal,
+          currency: 'EGP'
+        });
+      }
 
       const msg = `🛍️ *طلب جديد من LAVÉRA*\n\n` +
         `👤 *الاسم:* ${document.getElementById('custName').value.trim()}\n` +
